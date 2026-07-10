@@ -1,0 +1,25 @@
+{
+  "permissions": {
+    "allow": [
+      "PowerShell(node --version)",
+      "PowerShell(npm --version)",
+      "Bash(which node *)",
+      "Read(//c//**)",
+      "Bash(find 'C:\\\\Users\\\\Brade/AppData/Local/Microsoft/WinGet' -maxdepth 3 -iname *node*)",
+      "PowerShell($machinePath = [Environment]::GetEnvironmentVariable\\('Path','Machine'\\); $userPath = [Environment]::GetEnvironmentVariable\\('Path','User'\\); \"MACHINE: $machinePath\"; \"USER: $userPath\")",
+      "Bash(curl -s https://nodejs.org/dist/index.json)",
+      "PowerShell($env:Path = \"$env:LOCALAPPDATA\\\\nodejs-portable;$env:Path\"; npm install --no-fund --no-audit 2>$null; if \\($?\\) { \"INSTALL OK\" })",
+      "PowerShell($env:Path = \"$env:LOCALAPPDATA\\\\nodejs-portable;$env:Path\"; node scripts/copy-stockfish.mjs; Get-ChildItem public/stockfish | Select-Object Name, Length)",
+      "PowerShell($env:Path = \"$env:LOCALAPPDATA\\\\nodejs-portable;$env:Path\"; npx tsc -b 2>$null; if \\($LASTEXITCODE -eq 0\\) { \"TYPECHECK OK\" } else { \"TYPECHECK FAILED: $LASTEXITCODE\" })",
+      "PowerShell($env:Path = \"$env:LOCALAPPDATA\\\\nodejs-portable;$env:Path\"; npx tsc -b 2>$null; if \\($LASTEXITCODE -eq 0\\) { \"TYPECHECK OK\" } else { \"TYPECHECK FAILED\" })",
+      "PowerShell($env:Path = \"$env:LOCALAPPDATA\\\\nodejs-portable;$env:Path\"; npm run build 2>$null; if \\($LASTEXITCODE -eq 0\\) { \"BUILD OK\" } else { \"BUILD FAILED\" })",
+      "Bash(curl -s \"https://site.api.espn.com/apis/site/v2/sports/football/college-football/teams?limit=500\" -o teams-raw.json)",
+      "Bash(curl -s \"https://site.api.espn.com/apis/site/v2/sports/football/college-football/teams?limit=500&page=2\" -o teams-p2.json)",
+      "Bash('C:\\\\Users\\\\Brade/AppData/Local/nodejs-portable/node.exe' -e ' *)",
+      "PowerShell($env:Path = \"$env:LOCALAPPDATA\\\\nodejs-portable;$env:Path\"; npx tsc -b 2>$null; if \\($LASTEXITCODE -eq 0\\) { \"TYPECHECK OK\" } else { npx tsc -b 2>&1 | Select-Object -First 30 })",
+      "WebFetch(domain:open.spotify.com)",
+      "Bash(gh --version)",
+      "Bash(gh auth *)"
+    ]
+  }
+}
