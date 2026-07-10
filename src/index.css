@@ -1,0 +1,169 @@
+@import 'tailwindcss';
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+:root {
+  --sq-light: #eef0d5;
+  --sq-dark: #739552;
+  --sq-last-move: rgba(255, 213, 79, 0.5);
+  --sq-selected: rgba(255, 235, 59, 0.55);
+  --sq-hover-ring: rgba(255, 255, 255, 0.65);
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  overscroll-behavior: none;
+}
+
+/* King-in-check flash */
+@keyframes check-pulse {
+  0%,
+  100% {
+    box-shadow: inset 0 0 0 9999px rgba(220, 38, 38, 0);
+  }
+  50% {
+    box-shadow: inset 0 0 0 9999px rgba(220, 38, 38, 0.55);
+  }
+}
+
+.check-flash {
+  animation: check-pulse 1.1s ease-in-out infinite;
+}
+
+/* Piece pop when a drop snaps in */
+@keyframes drop-settle {
+  0% {
+    transform: scale(1.08);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.drop-settle {
+  animation: drop-settle 130ms ease-out;
+}
+
+/* Promotion dialog entrance */
+@keyframes promo-in {
+  from {
+    opacity: 0;
+    transform: translateY(-4px) scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.promo-in {
+  animation: promo-in 120ms ease-out;
+}
+
+/* Keep pieces from triggering scrolling/text-selection while dragging */
+.board-surface {
+  touch-action: none;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+.board-surface * {
+  -webkit-user-drag: none;
+}
+
+/* A grabbed piece: subtle lift with scale + shadow */
+.piece-lifted {
+  transform: scale(1.15);
+  filter: drop-shadow(0 6px 8px rgba(0, 0, 0, 0.35));
+}
+
+/* 8-bit booth: talking mouths, head bobs, blinks, and Pat's gesturing arm */
+.booth-mouth,
+.booth-head,
+.booth-eye,
+.booth-arm {
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+.booth-arm {
+  transform-origin: top center;
+}
+
+.booth-eye {
+  animation: booth-blink 4.6s infinite;
+}
+
+.speaking-pat .pat .booth-mouth,
+.speaking-kirk .kirk .booth-mouth {
+  animation: booth-mouth-flap 0.22s steps(2, jump-none) infinite;
+}
+
+.speaking-pat .pat .booth-head,
+.speaking-kirk .kirk .booth-head {
+  animation: booth-head-bob 0.62s ease-in-out infinite;
+}
+
+.speaking-pat .pat .booth-arm {
+  animation: booth-arm-wave 0.72s ease-in-out infinite;
+}
+
+@keyframes booth-mouth-flap {
+  0%,
+  100% {
+    transform: scaleY(0.4);
+  }
+  50% {
+    transform: scaleY(1.7);
+  }
+}
+
+@keyframes booth-head-bob {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-1.6px);
+  }
+}
+
+@keyframes booth-arm-wave {
+  0%,
+  100% {
+    transform: rotate(0deg);
+  }
+  50% {
+    transform: rotate(-16deg);
+  }
+}
+
+@keyframes booth-blink {
+  0%,
+  91%,
+  100% {
+    transform: scaleY(1);
+  }
+  94% {
+    transform: scaleY(0.15);
+  }
+}
+
+/* Subtle grass/turf texture: mowing bands + grain noise over the board */
+.turf-overlay {
+  background-image:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='matrix' values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.4 0.4 0.4 0 0'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E"),
+    repeating-linear-gradient(
+      90deg,
+      rgba(255, 255, 255, 0.05) 0,
+      rgba(255, 255, 255, 0.05) 12.5%,
+      rgba(0, 0, 0, 0.05) 12.5%,
+      rgba(0, 0, 0, 0.05) 25%
+    );
+  opacity: 0.55;
+}
